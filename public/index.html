@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bluesky Multi Poster</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>نشر تلقائي على عدة حسابات Bluesky</h1>
+
+  <form id="accounts-form">
+    <div id="accounts-container">
+      <div class="account-entry">
+        <input type="text" name="handle" placeholder="اسم المستخدم (handle)" required />
+        <input type="password" name="appPassword" placeholder="كلمة مرور التطبيق (app password)" required />
+        <button type="button" class="remove-account" title="حذف الحساب">×</button>
+      </div>
+    </div>
+    <button type="button" id="add-account">إضافة حساب جديد +</button>
+
+    <label for="donationLink">رابط التبرع:</label>
+    <input type="url" id="donationLink" name="donationLink" placeholder="أدخل رابط التبرع" />
+
+    <div class="buttons">
+      <button type="submit">بدء النشر</button>
+      <button type="button" id="pauseAll">إيقاف مؤقت للجميع</button>
+      <button type="button" id="resumeAll">استئناف للجميع</button>
+      <button type="button" id="stopAll">إيقاف النشر تمامًا</button>
+    </div>
+  </form>
+
+  <h2>حالة النشر</h2>
+  <div id="status"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>

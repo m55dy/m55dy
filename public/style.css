@@ -1,0 +1,106 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 15px;
+  background: #f9f9f9;
+  color: #333;
+  direction: rtl;
+  text-align: right;
+}
+
+h1, h2 {
+  color: #0057b7;
+}
+
+form {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.account-entry {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.account-entry input {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.remove-account {
+  background: #e74c3c;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  width: 32px;
+  border-radius: 50%;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+}
+
+#add-account {
+  margin-bottom: 15px;
+  background: #27ae60;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.buttons button {
+  flex: 1;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+}
+
+.buttons button[type="submit"] {
+  background: #0057b7;
+  color: white;
+}
+
+.buttons button#pauseAll {
+  background: #f39c12;
+  color: white;
+}
+
+.buttons button#resumeAll {
+  background: #27ae60;
+  color: white;
+}
+
+.buttons button#stopAll {
+  background: #e74c3c;
+  color: white;
+}
+
+#status {
+  margin-top: 15px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  min-height: 80px;
+}
+
+.account-status {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
