@@ -1,0 +1,28 @@
+[2025-07-31T14:56:56.590Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\10.png'
+[2025-07-31T14:56:56.593Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\9.png'
+[2025-07-31T14:56:56.596Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\10.png'
+[2025-07-31T14:56:56.598Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\7.png'
+[2025-07-31T14:57:13.503Z] ✅ Posted: @hwkfan.bsky.social
+We lost everything in a moment. Now we cling to hope and humanity 😭. Help us hold on. Please check the link below 🙏. Be our light in the darkness — support us below 💡.
+
+https://chuffed.org/project/129421-amon-and-family-need-your-support
+[2025-07-31T14:58:44.445Z] ❌ Error for mm555ty.bsky.social: This file is too large. It is 1.19MB but the maximum size is 976.56KB.
+[2025-07-31T14:58:44.446Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\6.png'
+[2025-07-31T14:58:44.448Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\10.png'
+[2025-07-31T14:58:44.450Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\10.png'
+[2025-07-31T14:58:44.453Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\9.png'
+[2025-07-31T14:59:02.396Z] ✅ Posted: @divelawhawk.bsky.social
+2We lost everything in a moment. Now we cling to hope and humanity 😭. Help us hold on. Please check the link below 🙏. Be our light in the darkness — support us below 💡.
+
+https://chuffed.org/project/129421-amon-and-family-need-your-support
+[2025-07-31T15:00:02.406Z] ✅ All posts done for mm555ty.bsky.social
+[2025-07-31T15:02:11.804Z] 🛑 All accounts stopped
+[2025-07-31T15:05:02.828Z] ❌ Error for mm555ty.bsky.social: ENOENT: no such file or directory, open 'C:\Users\pc\Desktop\hema\public\10.png'
+[2025-07-31T15:05:14.721Z] ✅ Posted: @scottdochterman.bsky.social
+We lost everything in a moment. Now we cling to hope and humanity 😭. Help us hold on. Please check the link below 🙏. Be our light in the darkness — support us below 💡.
+
+https://chuffed.org/project/129421-amon-and-family-need-your-support
+[2025-07-31T15:06:24.766Z] ✅ Posted: @hawkgal.bsky.social
+2We lost everything in a moment. Now we cling to hope and humanity 😭. Help us hold on. Please check the link below 🙏. Be our light in the darkness — support us below 💡.
+
+https://chuffed.org/project/129421-amon-and-family-need-your-support
