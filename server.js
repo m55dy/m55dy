@@ -106,7 +106,7 @@ const imagePath = path.join(__dirname, 'public', `${randomIndex}.png`);
       $type: 'app.bsky.embed.external',
       external: {
         uri: lastLine,
-        title: "Save a Life, Support a Future🌹",
+        title: "🌍 Father's call: Help me survive me and my children in the war",
         description: "5
 🌍 Father's call: Help me survive me and my children in the war5
  ",
