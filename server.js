@@ -107,7 +107,9 @@ const imagePath = path.join(__dirname, 'public', `${randomIndex}.png`);
       external: {
         uri: lastLine,
         title: "Save a Life, Support a Future🌹",
-        description: "Extend a Helping Hand: Your Donation Makes a Difference💔",
+        description: "5
+🌍 Father's call: Help me survive me and my children in the war5
+ ",
         thumb: blob.data.blob
       }
     };
