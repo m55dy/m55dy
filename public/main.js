@@ -3,7 +3,7 @@ const addAccountBtn = document.getElementById('add-account');
 const form = document.getElementById('accounts-form');
 const statusDiv = document.getElementById('status');
 
-function createAccountEntry() {
+function createAccountEntry(handle = '', appPassword = '', link = '') {
   const div = document.createElement('div');
   div.className = 'account-entry';
 
@@ -12,22 +12,35 @@ function createAccountEntry() {
   inputHandle.name = 'handle';
   inputHandle.placeholder = 'اسم المستخدم (handle)';
   inputHandle.required = true;
+  inputHandle.value = handle;
 
   const inputPassword = document.createElement('input');
   inputPassword.type = 'password';
   inputPassword.name = 'appPassword';
   inputPassword.placeholder = 'كلمة مرور التطبيق (app password)';
   inputPassword.required = true;
+  inputPassword.value = appPassword;
+
+  const inputLink = document.createElement('input');
+  inputLink.type = 'url';
+  inputLink.name = 'link';
+  inputLink.placeholder = 'رابط الدعم الخاص بالحساب';
+  inputLink.required = true;
+  inputLink.value = link;
 
   const removeBtn = document.createElement('button');
   removeBtn.type = 'button';
   removeBtn.className = 'remove-account';
   removeBtn.title = 'حذف الحساب';
   removeBtn.textContent = '×';
-  removeBtn.onclick = () => div.remove();
+  removeBtn.onclick = () => {
+    div.remove();
+    saveToLocalStorage();
+  };
 
   div.appendChild(inputHandle);
   div.appendChild(inputPassword);
+  div.appendChild(inputLink);
   div.appendChild(removeBtn);
 
   return div;
@@ -42,11 +55,10 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const formData = new FormData(form);
-  const donationLink = formData.get('donationLink') || '';
 
-  // جمع الحسابات
   const handles = formData.getAll('handle');
   const passwords = formData.getAll('appPassword');
+  const links = formData.getAll('link');
 
   if (handles.length === 0) {
     alert('يرجى إضافة حساب واحد على الأقل');
@@ -55,14 +67,17 @@ form.addEventListener('submit', async (e) => {
 
   const accounts = handles.map((handle, i) => ({
     handle: handle.trim(),
-    appPassword: passwords[i].trim()
+    appPassword: passwords[i].trim(),
+    link: links[i].trim()
   }));
+
+  saveToLocalStorage();
 
   try {
     const res = await fetch('/start', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ accounts, link: donationLink })
+      body: JSON.stringify({ accounts })
     });
     const data = await res.json();
     alert(data.message || data.error);
@@ -129,3 +144,37 @@ async function updateStatusLoop() {
     console.error('خطأ تحديث الحالة:', err);
   }
 }
+
+// حفظ واسترجاع البيانات من LocalStorage
+function saveToLocalStorage() {
+  const accounts = [];
+  document.querySelectorAll('.account-entry').forEach(entry => {
+    const handle = entry.querySelector('input[name="handle"]').value;
+    const appPassword = entry.querySelector('input[name="appPassword"]').value;
+    const link = entry.querySelector('input[name="link"]').value;
+    accounts.push({ handle, appPassword, link });
+  });
+  localStorage.setItem('accounts', JSON.stringify(accounts));
+}
+
+function loadFromLocalStorage() {
+  const data = JSON.parse(localStorage.getItem('accounts') || '[]');
+  if (data.length) {
+    accountsContainer.innerHTML = '';
+    data.forEach(acc => {
+      const entry = createAccountEntry(acc.handle, acc.appPassword, acc.link);
+      accountsContainer.appendChild(entry);
+    });
+  }
+}
+
+window.addEventListener('load', loadFromLocalStorage);
+// إضافة أسفل الكود الموجود
+
+document.getElementById('clearStorage').addEventListener('click', () => {
+  if (confirm('هل أنت متأكد من مسح جميع بيانات الحسابات المخزنة؟')) {
+    localStorage.removeItem('accounts');
+    accountsContainer.innerHTML = '';
+    alert('تم مسح البيانات المخزنة.');
+  }
+});

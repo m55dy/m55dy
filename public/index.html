@@ -14,13 +14,11 @@
       <div class="account-entry">
         <input type="text" name="handle" placeholder="اسم المستخدم (handle)" required />
         <input type="password" name="appPassword" placeholder="كلمة مرور التطبيق (app password)" required />
+        <input type="url" name="link" placeholder="رابط الدعم الخاص بالحساب" required />
         <button type="button" class="remove-account" title="حذف الحساب">×</button>
       </div>
     </div>
     <button type="button" id="add-account">إضافة حساب جديد +</button>
-
-    <label for="donationLink">رابط التبرع:</label>
-    <input type="url" id="donationLink" name="donationLink" placeholder="أدخل رابط التبرع" />
 
     <div class="buttons">
       <button type="submit">بدء النشر</button>
@@ -28,6 +26,12 @@
       <button type="button" id="resumeAll">استئناف للجميع</button>
       <button type="button" id="stopAll">إيقاف النشر تمامًا</button>
     </div>
+
+<div style="margin-top: 10px; text-align: center;">
+  <button type="button" id="clearStorage" style="background:#c0392b; color:#fff; padding:8px 12px; border:none; border-radius:5px; cursor:pointer;">
+    مسح البيانات المخزنة
+  </button>
+</div>
   </form>
 
   <h2>حالة النشر</h2>
