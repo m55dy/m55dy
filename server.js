@@ -7,24 +7,36 @@ const { BskyAgent } = require('@atproto/api');
 const XLSX = require('xlsx');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3002;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
 let runningAccounts = [];
-let donationLink = "";
 
 /* تحميل المنشورات من ملف Excel */
 function loadPostsFromExcel() {
   const workbook = XLSX.readFile('posts.xlsx');
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  let posts = XLSX.utils.sheet_to_json(sheet, { header: 1 })
-    .flat()
-    .filter(text => typeof text === 'string' && text.trim() !== '');
-  return [...new Set(posts)];
+  
+  // نحدد نطاق الخلايا
+  const range = XLSX.utils.decode_range(sheet['!ref']);
+  const posts = [];
+
+  for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
+    const cellAddress = { c: 0, r: rowNum };  // c=0 => العمود A
+    const cellRef = XLSX.utils.encode_cell(cellAddress);
+    const cell = sheet[cellRef];
+
+    if (cell && cell.v && typeof cell.v === 'string' && cell.v.trim() !== '') {
+      posts.push(cell.v.trim());
+    }
+  }
+
+  return posts;
 }
+
 
 /* تأخير */
 function delay(ms) {
@@ -94,28 +106,51 @@ async function postToBluesky(text, agent) {
   let facets = [];
   let embed = undefined;
 
-  if (/^https?:\/\/\S+$/i.test(lastLine)) {
+  // لو آخر سطر رابط bsky بوست
+  if (/^https:\/\/bsky\.app\/profile\/[^/]+\/post\/[^/]+$/i.test(lastLine)) {
     facets = generateFacet(cleanText, lastLine);
 
-    const randomIndex = Math.floor(Math.random() * 10) + 1; // من 1 إلى 10
-const imagePath = path.join(__dirname, 'public', `${randomIndex}.png`);
-    const imageBytes = fs.readFileSync(imagePath);
-    const blob = await agent.uploadBlob(imageBytes, { encoding: 'image/png' });
+    const match = lastLine.match(/profile\/([^/]+)\/post\/([^/]+)/);
+    if (match) {
+      const handle = match[1];
+      const postId = match[2];
 
-    embed = {
-      $type: 'app.bsky.embed.external',
-      external: {
-        uri: lastLine,
-        title: "🌍Save a Life, Support a Future",
-        description: "🌍 Father's call: Help me survive me and my children in the war",
-        thumb: blob.data.blob
+      try {
+        // 1- نجيب DID
+        const profile = await agent.getProfile({ actor: handle });
+        const did = profile?.data?.did;
+
+        if (did) {
+          // 2- نكوّن at-uri
+          const recordUri = `at://${did}/app.bsky.feed.post/${postId}`;
+
+          // 3- نجيب بيانات البوست للحصول على CID
+          const postData = await agent.api.app.bsky.feed.getPostThread({ uri: recordUri });
+          const cid = postData.data.thread?.post?.cid;
+
+          if (cid) {
+            embed = {
+              $type: 'app.bsky.embed.record',
+              record: {
+                uri: recordUri,
+                cid: cid
+              }
+            };
+          } else {
+            console.log(`⚠️ Couldn't fetch CID for post: ${recordUri}`);
+          }
+        }
+      } catch (err) {
+        console.log(`⚠️ Failed to fetch post CID: ${err.message}`);
       }
-    };
+    }
   }
 
+  // إضافة Facets للمنشن
   const mentionFacets = await createMentionFacets(cleanText, agent);
   facets = facets.concat(mentionFacets);
 
+  // نشر البوست
   await agent.post({ text: cleanText, facets, embed });
   logToFile(`✅ Posted: ${cleanText}`);
   await delay(60000);
@@ -146,8 +181,7 @@ async function startPostingForAccount(account) {
 /* بدء كل الحسابات */
 app.post('/start', async (req, res) => {
   try {
-    const { accounts, link } = req.body;
-    donationLink = link;
+    const { accounts } = req.body;
 
     if (!Array.isArray(accounts) || accounts.length === 0) {
       return res.status(400).json({ error: 'No accounts provided' });
@@ -166,7 +200,7 @@ app.post('/start', async (req, res) => {
 
         const queue = loadPostsFromExcel().map(p => {
           const mentions = getNextMentions();
-          const text = `${mentions}\n${p.trim()}\n\n${donationLink}`;
+          const text = `${mentions}\n${p.trim()}\n\n${acc.link}`;
           return text.length > 300 ? text.substring(0, 297) + "..." : text;
         });
 
